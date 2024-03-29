@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Identification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        .uploaded-image {
+            max-width: 100%;
+            margin-top: 20px;
+            display: none; /* Initially hide the uploaded image */
+            text-align: center;
+        }
+
+        .prediction-message {
+            text-align: center;
+            font-size: 24px; /* Adjust the font size as needed */
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crop Disease Identification</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Choose an image:</label>
+        <input type="file" name="file" id="file">
+        <button type="submit">Upload</button>
+    </form>
+    
+    {% if message %}
+    <p class="prediction-message">{{ message }}</p>
+    {% endif %}
+
+    <!-- Display uploaded image -->
+    <img src="" alt="Uploaded Image" class="uploaded-image">
+    
+    <script>
+        // Function to display the uploaded image
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    document.querySelector('.uploaded-image').src = e.target.result;
+                    document.querySelector('.uploaded-image').style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]); // Read the file as a data URL
+            }
+        }
+
+        // Trigger the function when a file is selected
+        document.getElementById('file').addEventListener('change', function() {
+            readURL(this);
+        });
+    </script>
+</body>
+</html>
